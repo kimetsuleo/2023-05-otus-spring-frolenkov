@@ -1,6 +1,7 @@
-package ru.otus.utils;
+package ru.otus.dao;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import ru.otus.domain.Question;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -8,12 +9,23 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
-public class CSVUtil {
+public class QuestionDaoImpl implements QuestionDao {
 
-    public <T> List<T> parseFromCsv(Class<? extends T> clazz, String path) {
-        return new CsvToBeanBuilder<T>(this.reader(path))
+    private final String path;
+
+    public QuestionDaoImpl(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public List<Question> getAllQuestions() {
+        return this.parseFromCsv(this.path);
+    }
+
+    private List<Question> parseFromCsv(String path) {
+        return new CsvToBeanBuilder<Question>(this.reader(path))
                 .withSeparator(',')
-                .withType(clazz)
+                .withType(Question.class)
                 .build()
                 .parse();
     }
@@ -27,5 +39,4 @@ public class CSVUtil {
 
         return new InputStreamReader(inputStream, StandardCharsets.UTF_8);
     }
-
 }

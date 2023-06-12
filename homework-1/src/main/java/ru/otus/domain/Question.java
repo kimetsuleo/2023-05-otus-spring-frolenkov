@@ -5,14 +5,14 @@ import com.opencsv.bean.CsvBindByName;
 
 import java.util.List;
 
-public class Quastion {
+public class Question {
     @CsvBindByName(required = true)
     private String title;
 
     @CsvBindAndSplitByName(elementType = String.class, column = "answers", splitOn = ";")
     private List<Answer> answers;
 
-    public Quastion() {
+    public Question() {
     }
 
     public void setTitle(String title) {
