@@ -14,7 +14,7 @@ public class QuestionDaoImpl implements QuestionDao {
     private final String path;
 
     public QuestionDaoImpl(String path) {
-        this.path = path;
+        this.path = "question.csv";
     }
 
     @Override
