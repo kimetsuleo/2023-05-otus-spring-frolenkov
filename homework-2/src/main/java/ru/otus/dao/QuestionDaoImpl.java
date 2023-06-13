@@ -1,6 +1,7 @@
 package ru.otus.dao;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.springframework.stereotype.Component;
 import ru.otus.domain.Question;
 
 import java.io.IOException;
@@ -9,11 +10,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
+@Component
 public class QuestionDaoImpl implements QuestionDao {
 
     private final String path;
 
-    public QuestionDaoImpl(String path) {
+    public QuestionDaoImpl() {
         this.path = "question.csv";
     }
 

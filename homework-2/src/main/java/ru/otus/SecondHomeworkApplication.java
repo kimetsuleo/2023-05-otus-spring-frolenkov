@@ -1,14 +1,12 @@
 package ru.otus;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.ComponentScan;
 
-@Configuration
-@Component
+@ComponentScan
 public class SecondHomeworkApplication {
     public static void main(String[] args) {
-        var context = new AnnotationConfigApplicationContext();
+        var context = new AnnotationConfigApplicationContext(SecondHomeworkApplication.class);
 
         context.close();
     }
