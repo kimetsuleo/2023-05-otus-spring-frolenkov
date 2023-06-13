@@ -3,8 +3,8 @@ package ru.otus.dao;
 import com.opencsv.bean.CsvToBeanBuilder;
 import ru.otus.domain.Question;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -19,24 +19,25 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public List<Question> getAllQuestions() {
-        return this.parseFromCsv(this.path);
-    }
-
-    private List<Question> parseFromCsv(String path) {
-        return new CsvToBeanBuilder<Question>(this.reader(path))
-                .withSeparator(',')
-                .withType(Question.class)
-                .build()
-                .parse();
-    }
-
-    private Reader reader(String path) {
-        var inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
-
-        if (Objects.isNull(inputStream)) {
-            throw new IllegalArgumentException("file not found!");
+        try {
+            return this.parseFromCsv(this.path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
 
-        return new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+    private List<Question> parseFromCsv(String path) throws IOException {
+        try (var inputStream = this.getClass().getClassLoader().getResourceAsStream(path)) {
+            if (Objects.isNull(inputStream)) {
+                throw new IllegalArgumentException("file not found!");
+            }
+
+            var inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            return new CsvToBeanBuilder<Question>(inputStreamReader)
+                    .withSeparator(',')
+                    .withType(Question.class)
+                    .build()
+                    .parse();
+        }
     }
 }
