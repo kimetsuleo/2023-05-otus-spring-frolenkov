@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public void registerUser() {
+    public User registerUser() {
         Scanner scanner = new Scanner(System.in);
 
         User user = new User();
@@ -20,5 +20,6 @@ public class UserServiceImpl implements UserService {
         System.out.print("Please enter your second name: ");
         user.setLastName(scanner.next());
 
+        return user;
     }
 }

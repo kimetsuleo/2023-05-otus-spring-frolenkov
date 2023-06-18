@@ -1,5 +1,7 @@
 package ru.otus.service;
 
+import ru.otus.domain.User;
+
 public interface UserService {
-    void registerUser();
+    User registerUser();
 }
