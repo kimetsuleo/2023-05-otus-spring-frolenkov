@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionDao questionDao;
+
     private final UserService userService;
 
 

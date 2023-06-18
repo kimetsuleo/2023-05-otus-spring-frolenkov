@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Question {
     @CsvBindByName(required = true)
     private String title;
+
     @CsvBindByName(column = "answers")
     private String answer;
 
