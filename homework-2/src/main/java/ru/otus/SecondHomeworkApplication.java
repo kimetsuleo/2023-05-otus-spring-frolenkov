@@ -10,7 +10,7 @@ public class SecondHomeworkApplication {
         var context = new AnnotationConfigApplicationContext(SecondHomeworkApplication.class);
 
         QuestionService service = context.getBean(QuestionService.class);
-        service.askQuestion();
+        service.startTesting();
 
         context.close();
     }

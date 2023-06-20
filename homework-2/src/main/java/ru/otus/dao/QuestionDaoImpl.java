@@ -1,6 +1,8 @@
 package ru.otus.dao;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import ru.otus.domain.Question;
 
@@ -10,14 +12,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
+@PropertySource("classpath:application.yml")
 @Component
 public class QuestionDaoImpl implements QuestionDao {
 
-    private final String path;
-
-    public QuestionDaoImpl() {
-        this.path = "question.csv";
-    }
+    @Value("${file}")
+    private String path;
 
     @Override
     public List<Question> getAllQuestions() {
@@ -43,3 +43,4 @@ public class QuestionDaoImpl implements QuestionDao {
         }
     }
 }
+
