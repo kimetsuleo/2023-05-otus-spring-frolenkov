@@ -36,7 +36,6 @@ public class UserDaoTest {
 
         verify(ioServiceMock).print("Please enter your first name: ");
         verify(ioServiceMock).print("Please enter your second name: ");
-        // verify(ioServiceMock).println(""); // Optional, not necessary
     }
 
 }
