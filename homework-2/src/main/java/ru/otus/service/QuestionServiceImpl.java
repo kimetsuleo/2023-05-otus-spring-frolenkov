@@ -9,7 +9,6 @@ import ru.otus.domain.Question;
 import ru.otus.domain.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
