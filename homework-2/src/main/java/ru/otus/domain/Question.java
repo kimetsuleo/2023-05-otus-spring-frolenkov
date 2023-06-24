@@ -1,5 +1,6 @@
 package ru.otus.domain;
 
+import com.opencsv.bean.CsvBindAndSplitByName;
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class Question {
     @CsvBindByName(column = "answers")
     private String answer;
 
+    @CsvBindAndSplitByName(elementType = String.class, column = "options", splitOn = ";")
     private List<Answer> optionAnswers;
 
 }
