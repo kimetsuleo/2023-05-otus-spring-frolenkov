@@ -15,5 +15,4 @@ public interface AuthorDao {
 
     Author getById(Long id);
 
-    void deleteById(Long id);
 }

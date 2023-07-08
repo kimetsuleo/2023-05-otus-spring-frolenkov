@@ -50,15 +50,7 @@ public class AuthorDaoImpl implements AuthorDao {
             put("id", id);
         }};
 
-        return this.namedParameterJdbcTemplate.queryForObject("select * from AUTHORS where ID = :id;", parameterMap, new AuthorMapper());
+        return this.namedParameterJdbcTemplate.queryForObject("select * from AUTHORS where ID = :id", parameterMap, new AuthorMapper());
     }
 
-    @Override
-    public void deleteById(Long id) {
-        var parameterMap = new HashMap<String, Object>() {{
-            put("id", id);
-        }};
-
-        this.namedParameterJdbcTemplate.update("delete from AUTHORS where ID = :id;", parameterMap);
-    }
 }
