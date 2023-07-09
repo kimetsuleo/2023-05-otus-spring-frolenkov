@@ -13,11 +13,24 @@ import java.sql.SQLException;
 public class BookMapper implements RowMapper<Book> {
     @Override
     public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+        var author = Author.builder()
+                .id(rs.getLong("author_id"))
+                .firstName(rs.getString("firstName"))
+                .lastName(rs.getString("lastName"))
+                .dof(rs.getDate("dof").toLocalDate())
+                .build();
+
+        var genre = Genre.builder()
+                .id(rs.getLong("genre_id"))
+                .title(rs.getString("genre_title"))
+                .build();
+
         return Book.builder()
                 .id(rs.getLong("id"))
                 .title(rs.getString("title"))
-                .author(rs.getObject("author_id", Author.class))
-                .genre(rs.getObject("genre_id", Genre.class))
+                .author(author)
+                .genre(genre)
                 .publication_at(rs.getDate("publication_at").toLocalDate())
                 .build()
                 ;
