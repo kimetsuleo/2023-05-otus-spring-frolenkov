@@ -15,7 +15,10 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @Builder
 public class Genre {
+
     @Id
     private Long id;
+
     private String title;
+
 }

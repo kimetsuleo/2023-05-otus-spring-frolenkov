@@ -1,7 +1,6 @@
 package ru.otus.commands;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -65,7 +64,7 @@ public class BookCommands {
 
         bookService.insert(book);
 
-        ioService.println("craete new book");
+        ioService.println("create new book");
     }
 
 }
