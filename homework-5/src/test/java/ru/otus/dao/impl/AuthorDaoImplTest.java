@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import ru.otus.domain.Author;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -51,9 +48,9 @@ class AuthorDaoImplTest {
     @Test
     @DisplayName("should insert new author")
     void shouldInsertNewAuthor() {
-        authorDao.insert(NEW_INSERT_AUTHOR);
+        Author insertEntity = authorDao.insert(NEW_INSERT_AUTHOR);
 
-        var actualAuthor = authorDao.getById(7L);
+        var actualAuthor = authorDao.getById(insertEntity.getId());
 
         assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(NEW_AUTHOR);
     }

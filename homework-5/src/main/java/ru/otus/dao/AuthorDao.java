@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AuthorDao {
 
-    void insert(Author author);
+    Author insert(Author author);
 
     List<Author> getAll();
 
