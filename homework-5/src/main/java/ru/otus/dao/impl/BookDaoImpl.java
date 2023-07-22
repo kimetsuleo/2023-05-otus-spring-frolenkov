@@ -9,9 +9,8 @@ import ru.otus.dao.BookDao;
 import ru.otus.domain.Book;
 import ru.otus.mapper.BookMapper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class BookDaoImpl implements BookDao {
     private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
     @Override
-    public void insert(Book book) {
+    public Book save(Book book) {
         var parameter = new MapSqlParameterSource()
                 .addValue("title", book.getTitle())
                 .addValue("authorId", book.getAuthor().getId())
@@ -33,6 +32,10 @@ public class BookDaoImpl implements BookDao {
                 .update("insert into BOOKS(title, author_id, genre_id, publication_at) VALUES ( :title, :authorId, :genreId, :publicationAt )",
                         parameter,
                         keyHolder);
+
+        book.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
+
+        return book;
     }
 
     @Override
@@ -83,8 +86,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void deleteById(Long id) {
-        Map<String, Object> parameter = new HashMap<>() {{
-            put("id", id);
+        var parameter = new MapSqlParameterSource() {{
+            addValue("id", id);
         }};
 
         this.namedJdbcTemplate

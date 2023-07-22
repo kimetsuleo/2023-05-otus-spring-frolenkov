@@ -64,9 +64,9 @@ class BookDaoImplTest {
                 .publication_at(LocalDate.of(2023, 1, 1))
                 .build();
 
-        bookDao.insert(book);
+        Book insertedBook = bookDao.save(book);
 
-        var actualBook = bookDao.getById(7L);
+        var actualBook = bookDao.getById(insertedBook.getId());
 
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(TEST_BOOK);
     }

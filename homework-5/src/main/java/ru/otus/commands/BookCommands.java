@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.converter.BookConverter;
 import ru.otus.domain.Book;
 import ru.otus.service.AuthorService;
 import ru.otus.service.BookService;
@@ -28,16 +29,18 @@ public class BookCommands {
 
     private final IOService ioService;
 
+    private final BookConverter bookConverter;
+
     @ShellMethod(value = "I print all books", key = "all-books")
     public void getAllBooks() {
         var books = bookService.getAll();
-        books.forEach(book -> ioService.println(book.toString()));
+        books.forEach(bookConverter::getBookNameWithIdAndGenreAndAuthor);
     }
 
     @ShellMethod(value = "I print book by id", key = "get-book-by-id")
     public void getBookById(@ShellOption(value = "id") Long id) {
         Book book = bookService.getById(id);
-        ioService.println(book.toString());
+        bookConverter.getBookNameWithIdAndGenreAndAuthor(book);
     }
 
     @ShellMethod(value = "I print book by id", key = "delete-book")
@@ -62,9 +65,9 @@ public class BookCommands {
                 .publication_at(LocalDate.of(year, month, day))
                 .build();
 
-        bookService.insert(book);
+        Book insertBook = bookService.insert(book);
 
-        ioService.println("create new book");
+        bookConverter.getBookNameWithIdAndGenreAndAuthor(insertBook);
     }
 
 }

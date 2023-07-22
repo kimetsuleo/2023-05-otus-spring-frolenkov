@@ -21,9 +21,8 @@ public class BookServiceImpl implements BookService {
     private final BookDao bookDao;
 
     @Override
-    public void insert(Book book) {
-        bookDao.insert(book);
-        log.info("create new book");
+    public Book insert(Book book) {
+        return bookDao.save(book);
     }
 
     @Override
