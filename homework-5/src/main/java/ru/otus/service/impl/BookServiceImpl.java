@@ -34,23 +34,23 @@ public class BookServiceImpl implements BookService {
     public Book getById(Long id) {
         var book = bookDao.getById(id);
 
-        if (book != null) {
-            return book;
-        } else {
+        if (book == null) {
             throw new RuntimeException("Book by id not found!");
         }
+
+        return book;
     }
 
     @Override
     public boolean deleteById(Long id) {
         var book = bookDao.getById(id);
 
-        if (book != null) {
-            bookDao.deleteById(id);
-            return true;
-        } else {
+        if (book == null) {
             log.error("book by id not found!");
             return false;
         }
+
+        bookDao.deleteById(id);
+        return true;
     }
 }
