@@ -33,10 +33,9 @@ class GenreDaoImplTest {
     @Test
     @DisplayName("insert new Genre")
     void shouldInsertNewGenre() {
-        genreDao.insert(INSERT_GENRE_DATA);
+        Genre insertedEntity = genreDao.insert(INSERT_GENRE_DATA);
 
-        Long genreId = 8L;
-        var actualGenre = genreDao.getById(genreId);
+        var actualGenre = genreDao.getById(insertedEntity.getId());
 
         assertThat(actualGenre).usingRecursiveComparison().isEqualTo(EXISTING_GENRE);
     }

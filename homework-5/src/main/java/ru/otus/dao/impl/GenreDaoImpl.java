@@ -1,7 +1,9 @@
 package ru.otus.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.dao.GenreDao;
 import ru.otus.domain.Genre;
@@ -10,6 +12,7 @@ import ru.otus.mapper.GenreMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,12 +21,18 @@ public class GenreDaoImpl implements GenreDao {
     private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
     @Override
-    public void insert(Genre genre) {
-        Map<String, Object> parameter = new HashMap<>() {{
-            put("title", genre.getTitle());
+    public Genre insert(Genre genre) {
+        var parameter = new MapSqlParameterSource() {{
+            addValue("title", genre.getTitle());
         }};
 
-        this.namedJdbcTemplate.update("insert into GENRES(title) values (:title)", parameter);
+        var keyHolder = new GeneratedKeyHolder();
+
+        this.namedJdbcTemplate.update("insert into GENRES(title) values (:title)", parameter, keyHolder);
+
+        genre.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
+
+        return genre;
     }
 
     @Override
@@ -33,8 +42,8 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public Genre getById(Long id) {
-        Map<String, Object> parameter = new HashMap<>() {{
-            put("id", id);
+        var parameter = new MapSqlParameterSource() {{
+            addValue("id", id);
         }};
 
         return this.namedJdbcTemplate
@@ -43,8 +52,8 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public void deleteById(Long id) {
-        Map<String, Object> parameter = new HashMap<>() {{
-            put("id", id);
+        var parameter = new MapSqlParameterSource() {{
+            addValue("id", id);
         }};
 
         this.namedJdbcTemplate.update("delete from GENRES where id = :id", parameter);
